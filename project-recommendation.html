@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Case Study: AI Course Recommendation System | Solomon Nnyamile</title>
+		<meta charset="utf- 8" />
+		<meta name="viewport" content="width=device- width, initial- scale=1, user- scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is- preload">
+		<div id="wrapper">
+			<div id="main">
+				<div class="inner">
+					<header id="header">
+						<a href="index.html" class="logo"><strong>Solomon Nnyamile</strong> &mdash; Developer &amp; Designer</a>
+						<ul class="icons">
+							<li><a href="https://linkedin.com/in/solomonnnyamile" class="icon brands fa- linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+							<li><a href="https://github.com/seven- smile" class="icon brands fa- github" target="_blank"><span class="label">GitHub</span></a></li>
+							<li><a href="mailto:juniornyamile@gmail.com" class="icon solid fa- envelope"><span class="label">Email</span></a></li>
+						</ul>
+					</header>
+
+					<section>
+						<header class="main">
+							<h1>AI Course Recommendation System</h1>
+						</header>
+
+						<div class="row">
+							<div class="col- 4 col- 12- medium">
+								<h3>Client</h3>
+								<p>JCF Foundation</p>
+							</div>
+							<div class="col- 4 col- 12- medium">
+								<h3>Role</h3>
+								<p>Developer</p>
+							</div>
+							<div class="col- 4 col- 12- medium">
+								<h3>Duration</h3>
+								<p>Jan 2024 – Apr 2025</p>
+							</div>
+						</div>
+
+						<!- -  TODO: Replace with actual screenshot - - >
+						<span class="image main"><img src="inte.png" alt="Course Recommendation System" /></span>
+
+						<hr class="major" />
+
+						<h2>The Problem</h2>
+						<p>
+							Choosing a university course in Ghana is a decision that most high school graduates make with remarkably little information. They know their grades. They might know two or three courses by name. Beyond that, they're largely guessing - or following what their parents or friends suggest. The JCF Foundation was working with exactly this population, and they wanted something that could actually help a student figure out what to study based on who they are, not just what grades they got.
+						</p>
+						<p>
+							The brief was simple on the surface: build a system that recommends university courses to high school graduates. The recommendation had to feel trustworthy to a teenager making one of the biggest decisions of their life. A bad recommendation engine that confidently suggests the wrong thing is worse than no recommendation at all.
+						</p>
+
+						<hr class="major" />
+
+						<h2>Two Iterations, Two Different Approaches</h2>
+						<p>
+							I built this in two distinct phases - and I'll be honest about why the first one wasn't good enough.
+						</p>
+						<p>
+							<strong>Iteration 1 - Random Forest:</strong> I started with a Random Forest classifier trained on student profile data -  grades, interests, subject strengths, and some demographic inputs. The model performed reasonably well on paper. Accuracy metrics looked decent. But when I watched real students interact with it, the output felt mechanical. It would confidently output "Computer Science" or "Nursing" with no explanation, and students just stared at it. A recommendation without reasoning isn't a recommendation - it's just a label.
+						</p>
+						<p>
+							<strong>Iteration 2 - GPT- 3 Integration:</strong> The second iteration kept the structured data approach but layered GPT- 3 on top as the interface layer. Instead of outputting a course label, the system now had a conversation with the student - asking follow- up questions, explaining its reasoning, and presenting recommendations in natural language with context. "Based on your strong performance in mathematics and your interest in problem- solving, you might find Computer Science or Engineering rewarding because..." That shift changed everything about how students received the recommendations.
+						</p>
+
+						<hr class="major" />
+
+						<h2>What Actually Made This Hard</h2>
+						<p>
+							Prompt engineering for a high- stakes use case is underestimated work. GPT- 3 is capable of producing confident- sounding nonsense, and when your user is a 17- year- old trying to pick a university course, confident nonsense is dangerous. I spent significant time building guardrails - constraining the model's output to the actual courses available in Ghanaian universities, preventing it from hallucinating institutions or programmes that didn't exist, and making sure it always acknowledged uncertainty rather than masking it.
+						</p>
+						<p>
+							The other challenge was cost. GPT- 3 API calls aren't free, and the foundation wasn't a well- funded organisation. I had to architect the system so that GPT- 3 was only invoked at the right moments.
+						</p>
+
+						<hr class="major" />
+
+						<h2>Outcome</h2>
+						<p>
+							The second iteration was a materially different experience for students. The conversational interface reduced drop- off - students stayed with the recommendation process longer and reported higher confidence in the suggestions they received. The system is live at <a href="https://uni- path- one.vercel.app/" target="_blank">uni- path- one.vercel.app</a> and was used as part of the foundation's career guidance programme. <!- -  TODO: If you tracked usage numbers - number of students who used it, completion rate, any feedback scores - add them here. - - >
+						</p>
+
+						<hr class="major" />
+						<ul class="actions">
+							<li><a href="https://uni-path-one.vercel.app/" class="button primary" target="_blank">View Live Site</a></li>
+							<li><a href="index.html" class="button">← Back to Portfolio</a></li>
+						</ul>
+					</section>
+				</div>
+			</div>
+
+			<div id="sidebar">
+				<div class="inner">
+					<nav id="menu">
+						<header class="major"><h2>Navigation</h2></header>
+						<ul>
+							<li><a href="index.html">Home</a></li>
+							<li><a href="index.html#projects">All Projects</a></li>
+							<li>
+								<span class="opener">Case Studies</span>
+								<ul>
+									<li><a href="project- copianto.html">Copianto.ai</a></li>
+									<li><a href="project- cms.html">CMS & Payment Platform</a></li>
+									<li><a href="project-recommendation.html">AI Course Recommender</a></li>
+									<li><a href="project- mis.html">MIS Dashboard</a></li>
+									<li><a href="project- rpa.html">RPA Resume Classifier</a></li>
+									<li><a href="project- ecommerce.html">E- Commerce App</a></li>
+								</ul>
+							</li>
+						</ul>
+					</nav>
+
+					<section>
+						<header class="major"><h2>Tech Stack</h2></header>
+						<ul>
+							<li>Python</li>
+							<li>Random Forest (scikit- learn)</li>
+							<li>GPT- 3 API (OpenAI)</li>
+							<li>Prompt Engineering</li>
+							<li><!- -  TODO: Add frontend framework used - - ></li>
+						</ul>
+					</section>
+
+					<section>
+						<header class="major"><h2>Get in Touch</h2></header>
+						<ul class="contact">
+							<li class="icon solid fa- envelope"><a href="mailto:juniornyamile@gmail.com">juniornyamile@gmail.com</a></li>
+							<li class="icon solid fa- phone"><a href="tel:+233545441848">+233 545 441 848</a></li>
+							<li class="icon brands fa- linkedin"><a href="https://linkedin.com/in/solomonnnyamile" target="_blank">linkedin.com/in/solomonnnyamile</a></li>
+							<li class="icon brands fa- github"><a href="https://github.com/seven- smile" target="_blank">github.com/seven- smile</a></li>
+						</ul>
+					</section>
+
+					<footer id="footer">
+						<p class="copyright">&copy; Solomon Nnyamile. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+					</footer>
+				</div>
+			</div>
+		</div>
+
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+	</body>
+</html>

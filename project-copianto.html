@@ -1,0 +1,207 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Case Study: Copianto.ai | Solomon Nnyamile</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+		<div id="wrapper">
+			<div id="main">
+				<div class="inner">
+					<header id="header">
+						<a href="index.html" class="logo"><strong>Solomon Nnyamile</strong> &mdash; Developer &amp; Designer</a>
+						<ul class="icons">
+							<li><a href="https://linkedin.com/in/solomonnnyamile" class="icon brands fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+							<li><a href="https://github.com/seven-smile" class="icon brands fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+							<li><a href="mailto:juniornyamile@gmail.com" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+						</ul>
+					</header>
+
+					<section>
+						<header class="main">
+							<h1>Copianto.ai</h1>
+						</header>
+
+						<div class="row">
+							<div class="col-4 col-12-medium">
+								<h3>Company</h3>
+								<p>HDX Technologies</p>
+							</div>
+							<div class="col-4 col-12-medium">
+								<h3>Role</h3>
+								<p>Backend Developer</p>
+							</div>
+							<div class="col-4 col-12-medium">
+								<h3>Duration</h3>
+								<p>Jun 2024 – Sep 2025</p>
+							</div>
+						</div>
+
+						<!-- TODO: Replace with an actual screenshot of the Copianto.ai dashboard or chatbot interface -->
+						<span class="image main"><img src="cop.png" alt="Copianto.ai Platform" /></span>
+
+						<hr class="major" />
+
+						<h2>The Product</h2>
+						<p>
+							<a href="https://www.copianto.ai/" target="_blank">Copianto.ai</a> is a live AI platform that lets businesses deploy intelligent chatbots trained on their own data - documents, websites, internal files - to handle customer support, automate repetitive queries, and seamlessly hand off to human agents when the situation demands it. Think of it as giving any customer service team an AI-first layer that actually knows their business, not just a generic bot that frustrates users into abandoning the conversation.
+						</p>
+						<p>
+							I joined the backend team at Copianto.Ai mid-build and contributed to several of the platform's most technically complex features from design through to production deployment.
+						</p>
+
+						<hr class="major" />
+
+						<h2>What I Built</h2>
+
+						<h3>Knowledge Base Ingestion - Multi-Format File Uploads</h3>
+						<p>
+							For a chatbot to be useful, it needs to know things. I built the ingestion pipeline that allows users to upload their own knowledge base in whatever format their documents actually live in - PDFs, plain text files, CSVs, and more. Different file types require different parsing strategies, and the extracted content has to be cleaned, chunked, and stored in a form that the AI can actually retrieve meaningfully at query time. </p>
+							<p>
+								Under the hood, ingestion jobs run asynchronously via <strong>Celery</strong> with <strong>Redis</strong> as the
+								message broker - so uploading a large PDF doesn't block the user's session or time out. Once processed, embeddings
+								are stored in <strong>Weaviate</strong>, a vector database, enabling semantic search across the knowledge base
+								rather than brittle keyword matching. Getting that pipeline reliable across formats - handling malformed files, encoding issues, large documents - was foundational work that every other feature on the platform depends on.
+						</p>
+
+						<h3>Selective URL Training</h3>
+						<p>
+							One of the features I'm most proud of on this project. When businesses want to train their bot on their website, the naive approach is to crawl the entire domain. That's almost always wrong - you end up ingesting privacy policies, login pages, outdated blog posts from five years ago, and pages that have nothing to do with what customers actually ask about.
+						</p>
+						<p>
+							I built a system powered by <strong>Scrapy</strong> that lets users crawl a URL, see all the sublinks it discovers, and selectively choose exactly which pages they want included in the training data. The user stays in control. A customer service team can say "train on our documentation and our FAQ, but not our careers page and not our internal tools." That granularity makes the resulting bot meaningfully better.
+						</p>
+
+						<h3>Handoff Logic - Cold vs. Warm Escalation</h3>
+						<p>
+							This was the feature that required the most careful design thinking. When an AI chatbot reaches its limits, what happens next matters enormously. Get it wrong and you either leave users stranded mid-conversation or you interrupt human agents constantly with issues the bot could have handled.
+						</p>
+						<p>
+							I built and implemented the filter logic that distinguishes between two fundamentally different scenarios. A <strong>cold handoff</strong> is when the bot itself detects it can't adequately handle a conversation - based on sentiment, query complexity, or explicit escalation triggers - and routes it to a human agent queue. A <strong>warm handoff</strong> is when a human agent actively chooses to enter an ongoing conversation, stepping in alongside the bot rather than replacing it. These two flows look similar on the surface but require completely different state management, notification behaviour, and UI feedback. Getting the escalation triggers right - not too sensitive, not too lenient - required iterative tuning against real conversation data.
+						</p>
+
+						<h3>Workspace Escalation & Agent Notification System</h3>
+						<p>
+							When a chat requires urgent human attention, the right people need to know immediately. I built the escalation notification system that broadcasts an alert to all agents within a workspace when a conversation is flagged - email notifications with enough context that an agent can understand the situation before they even open the chat. The system had to handle workspace-level routing correctly: only the agents belonging to the relevant workspace receive the alert, not the entire platform.
+						</p>
+
+						<h3>Analytics Engine</h3>
+						<p>
+							Businesses deploying customer support tooling need to understand whether it's actually working. I built the analytics layer that tracks the metrics that matter operationally: how long chats last, how long it takes to resolve an escalated issue from the moment it's flagged to the moment an agent closes it, activity patterns across the platform.
+						</p>
+
+						<h3>Facebook Messenger Integration</h3>
+						<p>
+							I integrated Messenger as a supported channel on the platform, meaning businesses could deploy their Copianto.ai chatbot directly through their Facebook Page without any custom development on their end. This involved working with Meta's Messenger API - webhook setup, message format handling, and making sure the platform's conversation state management worked correctly across a channel with its own delivery semantics and constraints.
+						</p>
+
+						<h3>Workspace Invitation System</h3>
+						<p>
+							Teams need to collaborate. I built the system that allows workspace owners to invite colleagues - handling invitation flows, email delivery, role assignment on acceptance, and the edge cases around expired or already-used invitation links.
+						</p>
+
+						<hr class="major" />
+
+						<h2>What Made This Work Hard</h2>
+						<p>
+							The most consistently difficult part of this project was designing features that felt simple to users but required careful backend architecture to actually be reliable. The selective URL training is a good example - what the user sees is a checklist. What sits behind that checklist is a crawling system, a deduplication layer, a content extraction pipeline, and a training trigger that has to handle failures gracefully without the user ever knowing something went wrong in the middle.
+						</p>
+						<p>
+							The handoff system had a different kind of complexity - it was a distributed state problem. At any given moment, a conversation could be in AI-only mode, in human-monitored mode, or in full agent takeover. Every part of the platform that touches conversations had to reason correctly about that state, and the transitions between states had to be atomic enough that nothing got lost in the middle of a switch.
+						</p>
+						<p>
+							Working on a live product with real business customers meant the cost of getting something wrong was real and immediate. That sharpens your thinking considerably.
+						</p>
+
+						<hr class="major" />
+
+						<h2>Outcome</h2>
+						<p>
+							Copianto.ai is live and in active use by businesses deploying AI-powered customer support. The features I built - knowledge base ingestion, selective training, handoff logic, analytics, Messenger integration - are core to the platform's value proposition, not peripheral additions. <!-- TODO: If you have usage numbers you're permitted to share - active workspaces, messages processed, etc. - add them here. Even an order of magnitude helps. -->
+						</p>
+						<p>
+							This engagement was the most technically complex work I've done to date. It pushed me to think seriously about system design, not just feature implementation - about how the pieces fit together, what breaks under load, and what good looks like for a user who never thinks about the infrastructure keeping their chatbot running.
+						</p>
+
+						<hr class="major" />
+						<ul class="actions">
+							<li><a href="https://www.copianto.ai/" class="button primary" target="_blank">View Live Platform</a></li>
+							<li><a href="index.html" class="button">← Back to Portfolio</a></li>
+						</ul>
+					</section>
+				</div>
+			</div>
+
+			<div id="sidebar">
+				<div class="inner">
+					<nav id="menu">
+						<header class="major"><h2>Navigation</h2></header>
+						<ul>
+							<li><a href="index.html">Home</a></li>
+							<li><a href="index.html#projects">All Projects</a></li>
+							<li>
+								<span class="opener">Case Studies</span>
+								<ul>
+									<li><a href="project-copianto.html">Copianto.ai</a></li>
+									<li><a href="project-cms.html">CMS & Payment Platform</a></li>
+									<li><a href="project-recommendation.html">AI Course Recommender</a></li>
+									<li><a href="project-mis.html">MIS Dashboard</a></li>
+									<li><a href="project-rpa.html">RPA Resume Classifier</a></li>
+									<li><a href="project-ecommerce.html">E-Commerce App</a></li>
+								</ul>
+							</li>
+						</ul>
+					</nav>
+
+					<section>
+						<header class="major"><h2>Tech Stack</h2></header>
+						<ul>
+							<li>Python / Django</li>
+							<li>Django REST Framework</li>
+							<li>PostgreSQL</li>
+							<li>Firebase Authentication</li>
+							<li>Meta Messenger API</li>
+							<li>Cloud Deployment</li>
+							<!-- TODO: Add any other specific libraries - Celery for async tasks? Redis? Any vector DB for the knowledge base? -->
+						</ul>
+					</section>
+
+					<section>
+						<header class="major"><h2>Key Features Owned</h2></header>
+						<ul>
+							<li>Multi-format knowledge base ingestion</li>
+							<li>Selective URL training</li>
+							<li>Cold & warm handoff logic</li>
+							<li>Agent escalation & notifications</li>
+							<li>Platform analytics engine</li>
+							<li>Messenger channel integration</li>
+							<li>Workspace invitation system</li>
+						</ul>
+					</section>
+
+					<section>
+						<header class="major"><h2>Get in Touch</h2></header>
+						<ul class="contact">
+							<li class="icon solid fa-envelope"><a href="mailto:juniornyamile@gmail.com">juniornyamile@gmail.com</a></li>
+							<li class="icon solid fa-phone"><a href="tel:+233545441848">+233 545 441 848</a></li>
+							<li class="icon brands fa-linkedin"><a href="https://linkedin.com/in/solomonnnyamile" target="_blank">linkedin.com/in/solomonnnyamile</a></li>
+							<li class="icon brands fa-github"><a href="https://github.com/seven-smile" target="_blank">github.com/seven-smile</a></li>
+						</ul>
+					</section>
+
+					<footer id="footer">
+						<p class="copyright">&copy; Solomon Nnyamile. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+					</footer>
+				</div>
+			</div>
+		</div>
+
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+	</body>
+</html>
